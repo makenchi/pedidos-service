@@ -32,6 +32,31 @@ namespace pedidoServiceApi.Controllers
                 return BadRequest("Pedido precisa ao menos ter um item.");
             }
 
+            var client = await _context.Clientes.FindAsync(pedido.IdCliente);
+            if (client == null)
+            {
+                return BadRequest("Pedido precisa de um cliente existente.");
+            }
+
+            //criando pedido
+            _context.Pedidos.Add(new Pedido{
+                NumeroDoPedido = pedido.NumeroDoPedido,
+                idClinte = pedido.IdCliente,
+                DataDeCriacao = DateTime.Now
+            });
+
+            foreach (var itenPedido in pedido.ItensDoPedido)
+            {
+                _context.ItensPedidos.Add(new ItemPedido
+                {
+                    Nome = itenPedido.Nome,
+                    ValorUnitario = itenPedido.ValorUnitario,
+                    NumeroDoPedido = pedido.NumeroDoPedido
+                });
+            }
+
+            _context.SaveChangesAsync();
+
             return Ok("Pedido inserido com sucesso.");
         }
     }
