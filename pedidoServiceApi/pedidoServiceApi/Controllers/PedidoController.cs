@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using pedidoServiceApi.Data;
 using pedidoServiceApi.DTO;
 using pedidoServiceApi.Models;
+using System.Linq;
 
 namespace pedidoServiceApi.Controllers
 {
@@ -58,6 +59,28 @@ namespace pedidoServiceApi.Controllers
             _context.SaveChangesAsync();
 
             return Ok("Pedido inserido com sucesso.");
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<AddPedidoDTO>> Get(int id)
+        {
+            var pedido = await _context.Pedidos.FindAsync(id);
+            if (pedido == null)
+            {
+                return BadRequest("Pedido não encontrado.");
+            }
+
+            var itensDoPedido = await _context.ItensPedidos.Where(
+                x => x.NumeroDoPedido == pedido.NumeroDoPedido).ToListAsync();
+
+            AddPedidoDTO pedidoDTO = new AddPedidoDTO
+            {
+                IdCliente = pedido.idClinte,
+                NumeroDoPedido = pedido.NumeroDoPedido,
+                ItensDoPedido = itensDoPedido
+            };
+
+            return Ok(pedido);
         }
     }
 }
