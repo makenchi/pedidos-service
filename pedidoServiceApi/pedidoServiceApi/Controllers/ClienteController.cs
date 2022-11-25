@@ -61,7 +61,7 @@ namespace pedidoServiceApi.Controllers
             return Ok("Informações do cliente alteradas com sucesso.");
         }
 
-        [HttpDelete("{id")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
             var dbClient = await _context.Clientes.FindAsync(id);

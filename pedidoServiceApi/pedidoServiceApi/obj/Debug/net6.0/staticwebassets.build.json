@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "3TL9z1k6Wngg/zd4DrJPY3I6nANNr9LZwLPORWGMMt4=",
+  "Source": "pedidoServiceApi",
+  "BasePath": "_content/pedidoServiceApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
